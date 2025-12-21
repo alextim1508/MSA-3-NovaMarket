@@ -63,7 +63,7 @@
 ----------
 ## На основе внешней метрики (RPS)
 
-1.  **Запустите Minikube и включите `metrics-server`:**
+1. **Запустите Minikube и включите `metrics-server`:**
 
     ```bash
     minikube start --driver=docker
@@ -71,21 +71,21 @@
     # minikube dashboard # (опционально)
     ```
 
-2.  **Настройте Helm:**
+2. **Настройте Helm:**
 
     ```bash
     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
     helm repo update
     ```
 
-3.  **Установите `kube-prometheus-stack` и `prometheus-adapter` как отдельные релизы:**
+3. **Установите `kube-prometheus-stack` и `prometheus-adapter` как отдельные релизы:**
 
     ```bash
     helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --create-namespace
     helm install prometheus-adapter prometheus-community/prometheus-adapter -f adapter-values.yaml --namespace monitoring --create-namespace
     ```
 
-4.  **Примените манифесты приложения и ServiceMonitor:**
+4. **Примените манифесты приложения и ServiceMonitor:**
 
     ```bash
     kubectl apply -f deployment.yaml
@@ -93,10 +93,10 @@
     kubectl apply -f hpa-rps.yaml
     kubectl apply -f servicemonitor.yaml
     ```
-    
-    ![get_pods_hpa_rps.jpg](results/screenshots/get_pods_hpa_rps.jpg)
+   
+    ![get_pods_with_prometheus_adapter.jpg](results/screenshots/get_pods_with_prometheus_adapter.jpg)
 
-5.  **Проверьте доступность метрики:**
+6. **Проверьте доступность метрики:**
 
     ```bash
     kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/http_requests_per_second
